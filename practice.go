@@ -1,12 +1,11 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
-
 func main() {
-	num := 333
-	fmt.Println(num)
-	fmt.Println(time.Now())
+	var ch1 chan int
+
+	// 受信専用
+	var ch2 <-chan int
+
+	// 送信専用
+	var ch3 chan<- int
 }
