@@ -10,5 +10,8 @@ func main() {
 	// var ch3 chan<- int
 
 	ch1 = make(chan int)
+	ch2 := make(chan int, 5)
 
+	println(cap(ch1))
+	println(cap(ch2))
 }
