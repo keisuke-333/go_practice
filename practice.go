@@ -14,4 +14,12 @@ func main() {
 
 	println(cap(ch1))
 	println(cap(ch2))
+
+	ch2 <- 1
+	println(len(ch2))
+
+	ch2 <- 2
+	ch2 <- 3
+	println(len(ch2))
+
 }
