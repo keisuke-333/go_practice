@@ -20,14 +20,17 @@ func main() {
 
 	ch2 <- 2
 	ch2 <- 3
-	println(len(ch2))
+	println("len", len(ch2))
 
 	i := <-ch2
 	println(i)
+	println("len", len(ch2))
 
 	i2 := <-ch2
 	println(i2)
+	println("len", len(ch2))
 
 	i3 := <-ch2
 	println(i3)
+	println("len", len(ch2))
 }
