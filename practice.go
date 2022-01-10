@@ -30,7 +30,11 @@ func main() {
 	println(i2)
 	println("len", len(ch2))
 
-	i3 := <-ch2
-	println(i3)
+	// i3 := <-ch2
+	// println(i3)
+	// println("len", len(ch2))
+
+	println(<-ch2)
 	println("len", len(ch2))
+
 }
