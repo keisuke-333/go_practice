@@ -22,4 +22,12 @@ func main() {
 	ch2 <- 3
 	println(len(ch2))
 
+	i := <-ch2
+	println(i)
+
+	i2 := <-ch2
+	println(i2)
+
+	i3 := <-ch2
+	println(i3)
 }
