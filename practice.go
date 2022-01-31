@@ -3,18 +3,39 @@ package main
 import "fmt"
 
 func main() {
-	f := 1.11
-	fmt.Printf("%T\n", f)
-	fmt.Printf("%T %v\n", int(f), int(f))
+	// 1
+	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4, 1}
 
-	// [5 6]
-	s := []int{1, 2, 5, 6, 2, 3, 1}
-	fmt.Println(s[2:4])
+	var min int
 
-	m := map[string]int{
-		"Mike":  20,
-		"Nancy": 24,
-		"Messi": 30,
+	for i, num := range l {
+		if i == 0 {
+			min = num
+			continue
+		}
+
+		if min >= num {
+			min = num
+		}
 	}
-	fmt.Printf("%T %v", m, m)
+
+	fmt.Println(min)
+
+	// 2
+	m := map[string]int{
+		"apple":  200,
+		"banana": 300,
+		"grapes": 150,
+		"orange": 80,
+		"papaya": 500,
+		"kiwi":   90,
+	}
+
+	sum := 0
+
+	for _, v := range m {
+		sum += v
+	}
+
+	fmt.Println(sum)
 }
