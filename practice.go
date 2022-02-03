@@ -1,41 +1,15 @@
 package main
 
-import "fmt"
+import "github.com/gin-gonic/gin"
+
+import "net/http"
 
 func main() {
-	// 1
-	l := []int{100, 300, 23, 11, 23, 2, 4, 6, 4, 1}
-
-	var min int
-
-	for i, num := range l {
-		if i == 0 {
-			min = num
-			continue
-		}
-
-		if min >= num {
-			min = num
-		}
-	}
-
-	fmt.Println(min)
-
-	// 2
-	m := map[string]int{
-		"apple":  200,
-		"banana": 300,
-		"grapes": 150,
-		"orange": 80,
-		"papaya": 500,
-		"kiwi":   90,
-	}
-
-	sum := 0
-
-	for _, v := range m {
-		sum += v
-	}
-
-	fmt.Println(sum)
+	engine := gin.Default()
+	engine.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "hello world",
+		})
+	})
+	engine.Run(":3000")
 }
