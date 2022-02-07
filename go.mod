@@ -1,4 +1,4 @@
-module practice
+module github.com/keisuke-333/go_practice
 
 go 1.17
 
