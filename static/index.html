@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
-    <h1 style="color: rebeccapurple">{{.message}}</h1>
-  </body>
+  <h1>名前を入力してください</h1>
+  <form action="/hello" method="GET">
+    <input type="text" name="name" value="クジラ" />
+    <input type="submit" value="送信" />
+  </form>
 </html>
