@@ -1,18 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/keisuke-333/go_practice/handler"
 )
 
-type Vertex struct {
-	X, Y int
-}
-
-func (v Vertex) String() string {
-	return fmt.Sprintf("X is %d! Y is %d", v.X, v.Y)
-}
-
 func main() {
-	v := Vertex{3, 4}
-	fmt.Println(v)
+	// インスタンス生成
+	r := gin.Default()
+
+	// プロジェクト内のhtmlを利用する
+	r.LoadHTMLGlob("templates/*")
+
+	// URLと処理の結び付け
+	r.GET("/user/:id", handler.GetUser)
+
+	r.Run(":3000")
 }
