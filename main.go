@@ -1,21 +1,17 @@
 package main
 
-import "fmt"
-
-func goroutine(s []string, c chan string) {
-	sum := ""
-	for _, v := range s {
-		sum += v
-		c <- sum
-	}
-	close(c)
-}
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/keisuke-333/go_practice/article"
+	"github.com/keisuke-333/go_practice/handler"
+)
 
 func main() {
-	words := []string{"test1!", "test2!", "test3!", "test4!"}
-	c := make(chan string)
-	go goroutine(words, c)
-	for w := range c {
-		fmt.Println(w)
-	}
+	article := article.New()
+	r := gin.Default()
+	r.GET("/article", handler.ArticlesGet(article))
+	r.POST("/article", handler.ArticlePost(article))
+
+	r.Run()
+
 }
