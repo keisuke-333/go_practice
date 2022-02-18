@@ -4,10 +4,10 @@ import (
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	"github.com/keisuke-333/go_practice/entity"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -19,19 +19,21 @@ func main() {
 	// —————————————————————————
 
 	// ————— MySQL接続 —————
-	db, err := gorm.Open("mysql", os.Getenv("CONNECT"))
+	dns := os.Getenv("CONNECT")
+	db, err := gorm.Open(mysql.Open(dns), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
 	defer func() {
-		if err := db.Close(); err != nil {
-			panic(err)
+		sqlDB, err := db.DB()
+		if err == nil {
+			sqlDB.Close()
 		}
 	}()
-	db.LogMode(true)
-	if err := db.DB().Ping(); err != nil {
-		panic(err)
-	}
+	// —————————————————————————
+
+	// ————— SQLログ出力 —————
+	db.Logger = db.Logger.LogMode(4)
 	// —————————————————————————
 
 	// ————— テーブル作成 —————
