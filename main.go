@@ -37,6 +37,7 @@ func main() {
 	// ————— テーブル作成 —————
 	db.AutoMigrate(
 		&entity.User{},
+		&entity.Organization{},
 	)
 	// —————————————————————————
 }
