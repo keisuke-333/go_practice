@@ -1,6 +1,14 @@
 package entity
 
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
 type User struct {
-	ID   string `gorm:"primary_key"`
-	Name string `gorm:"column:name;type:varchar(64)"`
+	gorm.Model
+	Name     string    `json:"name"`
+	Age      int       `json:"age"`
+	Birthday time.Time `json:"birthday"`
 }
