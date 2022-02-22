@@ -2,10 +2,11 @@ package main
 
 import (
 	"log"
-	// "net/http"
+
+	"net/http"
 	"os"
 
-	// "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/keisuke-333/go_practice/entity"
 	"gorm.io/driver/mysql"
@@ -43,4 +44,61 @@ func main() {
 		&entity.User{},
 	)
 	// —————————————————————————
+
+	r := gin.Default()
+
+	r.GET("/users", func(c *gin.Context) {
+		users := []entity.User{}
+		db.Find(&users)
+		c.JSON(http.StatusOK, users)
+	})
+
+	r.GET("/user/:id", func(c *gin.Context) {
+		user := entity.User{}
+		if err := db.Where("ID = ?", c.Param("id")).First(&user).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"data": user})
+	})
+
+	r.POST("/user", func(c *gin.Context) {
+		user := entity.User{}
+		if err := c.BindJSON(&user); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		if err := db.Create(&user).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, err.Error())
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"data": user})
+	})
+
+	r.PUT("/user/:id", func(c *gin.Context) {
+		user := entity.User{}
+		if err := db.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+		input := entity.User{}
+		if err := c.BindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		db.Where("ID = ?", c.Param("id")).First(&user).Updates(&input)
+		c.JSON(http.StatusOK, gin.H{"data": user})
+	})
+
+	r.DELETE("/user/:id", func(c *gin.Context) {
+		user := entity.User{}
+		if err := db.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+		db.Delete(&user)
+		c.JSON(http.StatusOK, gin.H{"data": true})
+	})
+
+	r.Run(":8080")
 }
