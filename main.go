@@ -3,12 +3,18 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/keisuke-333/go_practice/src/controller"
+	"github.com/keisuke-333/go_practice/src/model"
 )
 
 func main() {
-	router := gin.Default()
+	r := gin.Default()
 
-	router.GET("/", controller.IndexGet)
+	// Connect to database
+	model.DBConnect()
 
-	router.Run(":8080")
+	// Routes
+	r.GET("/tasks", controller.FindTasks)
+
+	// Run the server
+	r.Run(":8080")
 }
