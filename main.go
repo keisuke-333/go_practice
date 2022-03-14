@@ -1,20 +1,42 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/keisuke-333/go_practice/src/controller"
-	"github.com/keisuke-333/go_practice/src/model"
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
+type User struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
 func main() {
-	r := gin.Default()
+	e := echo.New()
 
-	// Connect to database
-	model.DBConnect()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
-	// Routes
-	r.GET("/tasks", controller.FindTasks)
+	e.GET("/user", show)
 
-	// Run the server
-	r.Run(":8080")
+	e.Logger.Fatal(e.Start(":8080"))
+}
+
+func show(c echo.Context) error {
+	users := []User{
+		{
+			Name:  "一郎",
+			Email: "ichiro@test.com",
+		},
+		{
+			Name:  "二郎",
+			Email: "jiro@test.com",
+		},
+		{
+			Name:  "三郎",
+			Email: "saburo@test.com",
+		},
+	}
+	return c.JSON(http.StatusOK, users)
 }
