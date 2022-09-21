@@ -1,3 +1,3 @@
-## go_practice
+## Go practice
 
 Practice repository for Go
