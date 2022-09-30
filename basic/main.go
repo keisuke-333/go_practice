@@ -13,4 +13,10 @@ func main() {
 	fmt.Println(b1, b2, b3, b4)
 	b5 := []byte{227, 129, 130}
 	fmt.Println(string(b5))
+
+	// anonymous function
+	af1 := func(x, y int) int {
+		return x * y
+	}(3, 6)
+	fmt.Println(af1)
 }
