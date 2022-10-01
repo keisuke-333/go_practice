@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func main() {
 	fmt.Println("Hello World")
@@ -19,4 +22,12 @@ func main() {
 		return x * y
 	}(3, 6)
 	fmt.Println(af1)
+
+	// error handling
+	e1 := "100"
+	e2, err := strconv.Atoi(e1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(e2)
 }
