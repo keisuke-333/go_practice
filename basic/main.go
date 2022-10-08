@@ -30,4 +30,10 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println(e2)
+
+	// for range
+	fr1 := map[string]int{"apple": 100, "banan": 200, "orange": 300}
+	for k, v := range fr1 {
+		fmt.Println(k, v)
+	}
 }
