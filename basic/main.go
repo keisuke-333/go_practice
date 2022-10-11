@@ -36,4 +36,17 @@ func main() {
 	for k, v := range fr1 {
 		fmt.Println(k, v)
 	}
+
+	// type switches
+	var ts1 interface{} = 3
+	switch v := ts1.(type) {
+	case bool:
+		fmt.Println(v, "bool")
+	case int:
+		fmt.Println(v, "int")
+	case string:
+		fmt.Println(v, "string")
+	default:
+		fmt.Println(v, "I don't know")
+	}
 }
