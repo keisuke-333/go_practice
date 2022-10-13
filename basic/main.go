@@ -49,4 +49,12 @@ func main() {
 	default:
 		fmt.Println(v, "I don't know")
 	}
+
+	//slice capacity
+	sc1 := make([]int, 5, 10)
+	fmt.Println(len(sc1))
+	fmt.Println(cap(sc1))
+	sc1 = append(sc1, 1, 2, 3, 4, 5, 6)
+	fmt.Println(len(sc1))
+	fmt.Println(cap(sc1))
 }
