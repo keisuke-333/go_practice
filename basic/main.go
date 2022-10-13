@@ -50,7 +50,7 @@ func main() {
 		fmt.Println(v, "I don't know")
 	}
 
-	//slice capacity
+	// slice capacity
 	sc1 := make([]int, 5, 10)
 	fmt.Println(len(sc1))
 	fmt.Println(cap(sc1))
