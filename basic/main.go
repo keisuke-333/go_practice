@@ -57,4 +57,10 @@ func main() {
 	sc1 = append(sc1, 1, 2, 3, 4, 5, 6)
 	fmt.Println(len(sc1))
 	fmt.Println(cap(sc1))
+
+	// slice copy
+	sco1 := []int{1, 2, 3, 4, 5}
+	sco2 := make([]int, 5, 10)
+	sco3 := copy(sco2, sco1)
+	fmt.Println(sco3, sco2)
 }
