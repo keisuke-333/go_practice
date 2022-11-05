@@ -5,6 +5,15 @@ import (
 	"strconv"
 )
 
+// variable length arguments
+func Sum(s ...int) int {
+	n := 0
+	for _, v := range s {
+		n += v
+	}
+	return n
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -63,4 +72,9 @@ func main() {
 	sco2 := make([]int, 5, 10)
 	sco3 := copy(sco2, sco1)
 	fmt.Println(sco3, sco2)
+
+	// variable length arguments
+	fmt.Println(Sum(1, 2, 3, 4, 5, 6, 7, 8, 9))
+	vla1 := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(Sum(vla1...))
 }
