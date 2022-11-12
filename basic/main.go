@@ -14,6 +14,14 @@ func Sum(s ...int) int {
 	return n
 }
 
+// channel
+func reciever1(c chan int) {
+	for {
+		i := <-c
+		fmt.Println(i)
+	}
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -77,4 +85,44 @@ func main() {
 	fmt.Println(Sum(1, 2, 3, 4, 5, 6, 7, 8, 9))
 	vla1 := []int{1, 2, 3, 4, 5, 6}
 	fmt.Println(Sum(vla1...))
+
+	// channel
+	ch1 := make(chan int, 5)
+	fmt.Println(cap(ch1))
+	ch1 <- 1
+	ch1 <- 2
+	ch1 <- 3
+	fmt.Println(len(ch1))
+	ch2 := <-ch1
+	fmt.Println(ch2)
+	fmt.Println(len(ch1))
+	fmt.Println(<-ch1)
+	fmt.Println(len(ch1))
+	// channel & goroutine
+	ch3 := make(chan int)
+	ch4 := make(chan int)
+	go reciever1(ch3)
+	go reciever1(ch4)
+	chi1 := 1
+	for chi1 < 30 {
+		ch3 <- chi1
+		ch4 <- chi1
+		chi1++
+	}
+	// close
+	chc1 := make(chan int, 2)
+	chc1 <- 1
+	close(chc1)
+	chc2, ok := <-chc1
+	fmt.Println(chc2, ok)
+	chc3, ok := <-chc1
+	fmt.Println(chc3, ok)
+	chcf := make(chan int, 3)
+	chcf <- 1
+	chcf <- 2
+	chcf <- 3
+	close(chcf)
+	for i := range chcf {
+		fmt.Println(i)
+	}
 }
