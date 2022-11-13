@@ -22,6 +22,17 @@ func reciever1(c chan int) {
 	}
 }
 
+// pointer
+func Double1(i *int) {
+	*i = *i * 2
+}
+
+func Double2(s []int) {
+	for i, v := range s {
+		s[i] = v * 2
+	}
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -125,4 +136,22 @@ func main() {
 	for i := range chcf {
 		fmt.Println(i)
 	}
+
+	// pointer
+	var p1 int = 100
+	fmt.Println(&p1)
+	var p2 *int = &p1
+	fmt.Println(p2)
+	fmt.Println(*p2)
+	*p2 = 300
+	fmt.Println(p1)
+	p1 = 200
+	fmt.Println(*p2)
+	Double1(&p1)
+	fmt.Println(p1)
+	Double1(p2)
+	fmt.Println(*p2)
+	var ps1 []int = []int{1, 2, 3}
+	Double2(ps1)
+	fmt.Println(ps1)
 }
