@@ -33,6 +33,40 @@ func Double2(s []int) {
 	}
 }
 
+// struct
+type T struct {
+	User
+}
+
+type User struct {
+	Name string
+	Age  int
+}
+
+type Users []*User
+
+func NewUser(name string, age int) *User {
+	return &User{Name: name, Age: age}
+}
+
+func UpdateUser1(user User) {
+	user.Name = "A"
+	user.Age = 100
+}
+
+func UpdateUser2(user *User) {
+	user.Name = "A"
+	user.Age = 100
+}
+
+func (u User) SayName() {
+	fmt.Println(u.Name)
+}
+
+func (u *User) SetName(name string) {
+	u.Name = name
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -154,4 +188,52 @@ func main() {
 	var ps1 []int = []int{1, 2, 3}
 	Double2(ps1)
 	fmt.Println(ps1)
+
+	// struct
+	var user1 User
+	fmt.Println(user1)
+	user1.Name = "user1"
+	user1.Age = 10
+	fmt.Println(user1)
+	user2 := User{Name: "user2", Age: 30}
+	fmt.Println(user2)
+	user3 := User{"user3", 40}
+	fmt.Println(user3)
+	user4 := new(User)
+	fmt.Println(user4)
+	user5 := &User{}
+	fmt.Println(user5)
+	UpdateUser1(user1)
+	UpdateUser2(user5)
+	fmt.Println(user1)
+	fmt.Println(*user5)
+	user6 := User{Name: "user6"}
+	user6.SayName()
+	user6.SetName("user6_test")
+	user6.SayName()
+	user_t := T{User: User{Name: "user7", Age: 30}}
+	fmt.Println(user_t)
+	fmt.Println(user_t.User)
+	fmt.Println(user_t.User.Name)
+	fmt.Println(user_t.Name)
+	user_t.SetName("user8")
+	fmt.Println(user_t.User)
+	user9 := NewUser("user9", 33)
+	fmt.Println(*user9)
+	user10 := User{Name: "user10", Age: 40}
+	user11 := User{Name: "user11", Age: 50}
+	user12 := User{Name: "user12", Age: 60}
+	user13 := User{Name: "user13", Age: 70}
+	users := Users{}
+	users = append(users, &user10, &user11, &user12, &user13)
+	for _, u := range users {
+		fmt.Println(*u)
+	}
+	mu1 := map[int]User{
+		1: {Name: "user14", Age: 80},
+		2: {Name: "user15", Age: 90},
+	}
+	for _, v := range mu1 {
+		fmt.Println(v)
+	}
 }
