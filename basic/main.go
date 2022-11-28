@@ -67,6 +67,50 @@ func (u *User) SetName(name string) {
 	u.Name = name
 }
 
+// interface
+type Stringfy interface {
+	ToString() string
+}
+type Person struct {
+	Name string
+	Age  int
+}
+
+func (p *Person) ToString() string {
+	return fmt.Sprintf("Name=%v, Age=%v", p.Name, p.Age)
+}
+
+type Car struct {
+	Number string
+	Model  string
+}
+
+func (c *Car) ToString() string {
+	return fmt.Sprintf("Number=%v, Model=%v", c.Number, c.Model)
+}
+
+type MyError struct {
+	Message string
+	ErrCode int
+}
+
+func (e *MyError) Error() string {
+	return e.Message
+}
+
+func RaiseError() error {
+	return &MyError{Message: "カスタムエラーが発生しました", ErrCode: 1234}
+}
+
+type Point struct {
+	A int
+	B string
+}
+
+func (p *Point) String() string {
+	return fmt.Sprintf("<<%v, %v>>", p.A, p.B)
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -236,4 +280,21 @@ func main() {
 	for _, v := range mu1 {
 		fmt.Println(v)
 	}
+
+	// interface
+	infa1 := []Stringfy{
+		&Person{Name: "Taro", Age: 20},
+		&Car{Number: "123-456", Model: "AB-1234"},
+	}
+	for _, v := range infa1 {
+		fmt.Println(v.ToString())
+	}
+	iferr1 := RaiseError()
+	fmt.Println(iferr1.Error())
+	iferr2, ok := iferr1.(*MyError)
+	if ok {
+		fmt.Println(iferr2.ErrCode)
+	}
+	ifp1 := &Point{100, "ABC"}
+	fmt.Println(ifp1)
 }
