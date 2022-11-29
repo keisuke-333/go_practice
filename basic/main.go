@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"strconv"
+	// scope
+	"github.com/keisuke-333/go_practice/basic/foo"
 )
 
 // variable length arguments
@@ -297,4 +299,8 @@ func main() {
 	}
 	ifp1 := &Point{100, "ABC"}
 	fmt.Println(ifp1)
+
+	// scope
+	fmt.Println(foo.Max)
+	fmt.Println(foo.ReturnMin())
 }
