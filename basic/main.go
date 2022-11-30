@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"strconv"
+
 	// scope
+	"github.com/keisuke-333/go_practice/basic/alib"
 	"github.com/keisuke-333/go_practice/basic/foo"
 )
 
@@ -111,6 +113,15 @@ type Point struct {
 
 func (p *Point) String() string {
 	return fmt.Sprintf("<<%v, %v>>", p.A, p.B)
+}
+
+// test
+func IsOne(i int) bool {
+	if i == 1 {
+		return true
+	} else {
+		return false
+	}
 }
 
 func main() {
@@ -303,4 +314,10 @@ func main() {
 	// scope
 	fmt.Println(foo.Max)
 	fmt.Println(foo.ReturnMin())
+
+	// test
+	fmt.Println(IsOne(1))
+	fmt.Println(IsOne(0))
+	tl1 := []int{1, 2, 3, 4, 5}
+	fmt.Println(alib.Average(tl1))
 }
