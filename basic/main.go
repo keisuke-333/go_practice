@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	// scope
 	"github.com/keisuke-333/go_practice/basic/alib"
@@ -350,4 +351,8 @@ func main() {
 	osn, _ := osf2.Read(osbs)
 	fmt.Println(osn)
 	fmt.Println(string(osbs))
+
+	// time
+	ti1 := time.Now()
+	fmt.Println(ti1.Zone())
 }
