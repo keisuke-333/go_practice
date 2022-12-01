@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"time"
@@ -355,4 +356,9 @@ func main() {
 	// time
 	ti1 := time.Now()
 	fmt.Println(ti1.Zone())
+
+	// math
+	fmt.Println(math.Pi)
+	fmt.Println(math.Max(1, 100))
+	fmt.Println(math.Min(1, 100))
 }
