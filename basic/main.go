@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"strconv"
 
 	// scope
@@ -320,4 +322,32 @@ func main() {
 	fmt.Println(IsOne(0))
 	tl1 := []int{1, 2, 3, 4, 5}
 	fmt.Println(alib.Average(tl1))
+
+	// os
+	/*
+		os.Exit(1)
+		fmt.Println("Start")
+	*/
+	/*
+		defer func() {
+			fmt.Println("defer")
+		}()
+		os.Exit(0)
+	*/
+	osf1, _ := os.Create("foo.txt")
+	osf1.Write([]byte("Hello\n"))
+	osf1.WriteAt([]byte("Golang\n"), 6)
+	osf1.Seek(0, os.SEEK_END)
+	osf1.WriteString("test")
+
+	osf2, err := os.Open("foo.txt")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer osf2.Close()
+
+	osbs := make([]byte, 128)
+	osn, _ := osf2.Read(osbs)
+	fmt.Println(osn)
+	fmt.Println(string(osbs))
 }
