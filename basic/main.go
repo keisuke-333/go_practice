@@ -361,4 +361,26 @@ func main() {
 	fmt.Println(math.Pi)
 	fmt.Println(math.Max(1, 100))
 	fmt.Println(math.Min(1, 100))
+
+	// log
+	log.SetOutput(os.Stdout)
+	log.Print("Log\n")
+	log.Println("Log2")
+	log.Printf("Log%d\n", 3)
+	/*
+		log.Fatal("Log\n")
+		log.Fatalln("Log2")
+		log.Fatalf("Log%d\n", 3)
+	*/
+	/*
+		log.Panic("Log\n")
+		log.Panicln("Log2")
+		log.Panicf("Log%d\n", 3)
+	*/
+	lf1, err := os.Create("test.log")
+	if err != nil {
+		return
+	}
+	log.SetOutput(lf1)
+	log.Println("ファイルに書き込み")
 }
