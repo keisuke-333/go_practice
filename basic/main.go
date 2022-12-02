@@ -5,6 +5,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -377,10 +378,17 @@ func main() {
 		log.Panicln("Log2")
 		log.Panicf("Log%d\n", 3)
 	*/
-	lf1, err := os.Create("test.log")
-	if err != nil {
-		return
-	}
-	log.SetOutput(lf1)
-	log.Println("ファイルに書き込み")
+	/*
+		lf1, err := os.Create("test.log")
+		if err != nil {
+			return
+		}
+		log.SetOutput(lf1)
+		log.Println("ファイルに書き込み")
+	*/
+
+	// regexp
+	re1 := regexp.MustCompile(`^ABC$`)
+	rematch1 := re1.MatchString("ABC")
+	fmt.Println(rematch1)
 }
