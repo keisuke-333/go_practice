@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math"
@@ -127,6 +128,14 @@ func IsOne(i int) bool {
 	} else {
 		return false
 	}
+}
+
+// json
+type UserJson struct {
+	ID      int       `json:"id,string"`
+	Name    string    `json:"name"`
+	Email   string    `json:"email"`
+	Created time.Time `json:"created"`
 }
 
 func main() {
@@ -391,4 +400,17 @@ func main() {
 	re1 := regexp.MustCompile(`^ABC$`)
 	rematch1 := re1.MatchString("ABC")
 	fmt.Println(rematch1)
+
+	// json
+	ju1 := new(UserJson)
+	ju1.ID = 1
+	ju1.Name = "test"
+	ju1.Email = "example@example.com"
+	ju1.Created = time.Now()
+
+	jm1, err := json.Marshal(ju1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(string(jm1))
 }
