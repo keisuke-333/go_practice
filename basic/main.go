@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -136,6 +137,14 @@ type UserJson struct {
 	Name    string    `json:"name"`
 	Email   string    `json:"email"`
 	Created time.Time `json:"created"`
+}
+
+// context
+func longProcess(ctx context.Context, ch chan string) {
+	fmt.Println("開始")
+	time.Sleep(2 * time.Second)
+	fmt.Println("終了")
+	ch <- "実行結果"
 }
 
 func main() {
@@ -413,4 +422,25 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(string(jm1))
+
+	// context
+	ctch1 := make(chan string)
+	ctx1 := context.Background()
+	ctx1, cancel := context.WithTimeout(ctx1, 0*time.Second)
+	defer cancel()
+	go longProcess(ctx1, ctch1)
+L:
+	for {
+		select {
+		case <-ctx1.Done():
+			fmt.Println("###########Error###########")
+			fmt.Println(ctx1.Err())
+			break L
+		case s := <-ctch1:
+			fmt.Println(s)
+			fmt.Println("success")
+			break L
+		}
+	}
+	fmt.Println("ループを抜けました")
 }
