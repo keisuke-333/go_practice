@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"net/url"
 	"os"
 	"regexp"
 	"strconv"
@@ -443,4 +444,23 @@ L:
 		}
 	}
 	fmt.Println("ループを抜けました")
+
+	// net/url
+	nu1, _ := url.Parse("https://example.com/search?a=1&b=2#top")
+	fmt.Println(nu1.Scheme)
+	fmt.Println(nu1.Host)
+	fmt.Println(nu1.Path)
+	fmt.Println(nu1.RawQuery)
+	fmt.Println(nu1.Fragment)
+	fmt.Println(nu1.Query())
+
+	nu2 := &url.URL{}
+	nu2.Scheme = "https"
+	nu2.Host = "google.com"
+	nu2q := nu2.Query()
+	nu2q.Set("q", "Golang")
+	nu2.RawQuery = nu2q.Encode()
+	fmt.Println(nu2)
+
+	// net/http
 }
