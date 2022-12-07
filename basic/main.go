@@ -4,8 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"math"
+	"net/http"
 	"net/url"
 	"os"
 	"regexp"
@@ -463,4 +465,26 @@ L:
 	fmt.Println(nu2)
 
 	// net/http
+	nh1, _ := http.Get("https://example.com")
+	fmt.Println(nh1.StatusCode)
+	fmt.Println(nh1.Proto)
+	fmt.Println(nh1.Header["Date"])
+	fmt.Println(nh1.Header["Content-Type"])
+	fmt.Println(nh1.Request.Method)
+	fmt.Println(nh1.Request.URL)
+	defer nh1.Body.Close()
+	nh1body, _ := ioutil.ReadAll(nh1.Body)
+	fmt.Println(string(nh1body))
+
+	urlv1 := url.Values{}
+	urlv1.Add("id", "1")
+	urlv1.Add("message", "メッセージ")
+	fmt.Println(urlv1.Encode())
+	nh2, err := http.PostForm("https://example.com/", urlv1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer nh2.Body.Close()
+	nh2body, _ := ioutil.ReadAll(nh2.Body)
+	fmt.Println(string(nh2body))
 }
