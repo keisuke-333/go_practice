@@ -1,3 +1,3 @@
-## basic syntax
+## basic
 
-For practicing basic Go syntax
+For practicing basic Go
