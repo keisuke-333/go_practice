@@ -12,6 +12,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"text/template"
 	"time"
 
 	// scope
@@ -148,6 +149,15 @@ func longProcess(ctx context.Context, ch chan string) {
 	time.Sleep(2 * time.Second)
 	fmt.Println("終了")
 	ch <- "実行結果"
+}
+
+// net/http server
+func top(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("tmpl.html")
+	if err != nil {
+		log.Println(err)
+	}
+	t.Execute(w, "Hello World")
 }
 
 func main() {
@@ -464,7 +474,7 @@ L:
 	nu2.RawQuery = nu2q.Encode()
 	fmt.Println(nu2)
 
-	// net/http
+	// net/http client
 	nh1, _ := http.Get("https://example.com")
 	fmt.Println(nh1.StatusCode)
 	fmt.Println(nh1.Proto)
@@ -487,4 +497,8 @@ L:
 	defer nh2.Body.Close()
 	nh2body, _ := ioutil.ReadAll(nh2.Body)
 	fmt.Println(string(nh2body))
+
+	// net/http server
+	http.HandleFunc("/top", top)
+	http.ListenAndServe(":8080", nil)
 }
