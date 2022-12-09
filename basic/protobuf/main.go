@@ -2,11 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/golang/protobuf/jsonpb"
 	"log"
-	"os"
 	"protobuf-practice/pb"
-
-	"google.golang.org/protobuf/proto"
 )
 
 func main() {
@@ -21,26 +19,17 @@ func main() {
 		Birthday:    &pb.Date{Year: 2000, Month: 1, Day: 1},
 	}
 
-	binData, err := proto.Marshal(employee)
+	m := jsonpb.Marshaler{}
+	out, err := m.MarshalToString(employee)
 	if err != nil {
-		log.Fatalln("Can't serialize", err)
+		log.Fatalln("Can't marshal to json", err)
 	}
 
-	if err := os.WriteFile("test.bin", binData, 0666); err != nil {
-		log.Fatalln("Can't write", err)
-	}
-
-	in, err := os.ReadFile("test.bin")
-	if err != nil {
-		log.Fatalln("Can't read file", err)
-	}
+	fmt.Println(out)
 
 	readEmployee := &pb.Employee{}
-
-	err = proto.Unmarshal(in, readEmployee)
-	if err != nil {
-		log.Fatalln("Can't deserialize", err)
+	if err := jsonpb.UnmarshalString(out, readEmployee); err != nil {
+		log.Fatalln("Can't unmarshal from json", err)
 	}
-
 	fmt.Println(readEmployee)
 }
