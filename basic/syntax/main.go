@@ -160,6 +160,13 @@ func top(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, "Hello World")
 }
 
+// generics
+func PrintSlice[T any](s []T) {
+	for _, v := range s {
+		fmt.Println(v)
+	}
+}
+
 func main() {
 	fmt.Println("Hello World")
 
@@ -499,6 +506,10 @@ L:
 	fmt.Println(string(nh2body))
 
 	// net/http server
-	http.HandleFunc("/top", top)
-	http.ListenAndServe(":8080", nil)
+	// http.HandleFunc("/top", top)
+	// http.ListenAndServe(":8080", nil)
+
+	// generics
+	PrintSlice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9})
+	PrintSlice([]string{"a", "b", "c"})
 }
