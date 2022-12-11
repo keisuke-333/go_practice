@@ -12,6 +12,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"sync"
 	"text/template"
 	"time"
 
@@ -165,6 +166,11 @@ func PrintSlice[T any](s []T) {
 	for _, v := range s {
 		fmt.Println(v)
 	}
+}
+
+func sayHello(wg *sync.WaitGroup) {
+	defer wg.Done()
+	fmt.Println("Hello 1")
 }
 
 func main() {
@@ -512,4 +518,15 @@ L:
 	// generics
 	PrintSlice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9})
 	PrintSlice([]string{"a", "b", "c"})
+
+	// goroutine
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go sayHello(&wg)
+	wg.Add(1)
+	func() {
+		defer wg.Done()
+		fmt.Println("Hello 2")
+	}()
+	wg.Wait()
 }
