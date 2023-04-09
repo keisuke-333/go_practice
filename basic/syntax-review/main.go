@@ -63,4 +63,17 @@ func main() {
 	fmt.Printf("value of ui1(dereference) %v\n", **pp1)
 	**pp1 = 10
 	fmt.Printf("value of ui1: %v\n", ui1)
+
+	// shadowing
+	ok, result := true, "A"
+	fmt.Printf("memory address of result: %p\n", &result)
+	if ok {
+		result := "B"
+		fmt.Printf("memory address of result: %p\n", &result)
+		println(result)
+	} else {
+		result := "C"
+		println(result)
+	}
+	println(result)
 }
