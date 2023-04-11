@@ -132,4 +132,24 @@ func main() {
 	sl5[3] = 9
 	fmt.Printf("sl5: %v %v %v\n", sl5, len(sl5), cap(sl5))
 	fmt.Printf("fs6: %v %v %v\n", fs6, len(fs6), cap(fs6))
+
+	// map
+	var ma1 map[string]int
+	ma2 := map[string]int{}
+	fmt.Printf("%v %v\n", ma1, ma1 == nil)
+	fmt.Printf("%v %v\n", ma2, ma2 == nil)
+	ma2["A"] = 10
+	ma2["B"] = 20
+	ma2["C"] = 0
+	fmt.Printf("%v %v %v\n", ma2, len(ma2), ma2["A"])
+	delete(ma2, "A")
+	fmt.Printf("%v %v %v\n", ma2, len(ma2), ma2["A"])
+	v, ok := ma2["A"]
+	fmt.Printf("%v %v\n", v, ok)
+	v, ok = ma2["C"]
+	fmt.Printf("%v %v\n", v, ok)
+
+	for k, v := range ma2 {
+		fmt.Printf("%v %v\n", k, v)
+	}
 }
