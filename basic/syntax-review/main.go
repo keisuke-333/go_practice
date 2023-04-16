@@ -1,8 +1,10 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strings"
 	"syntax-review/calculator"
 	"unsafe"
 
@@ -28,6 +30,22 @@ func (taskp *Task) extendEstimatePointer() {
 	taskp.Estimate += 10
 }
 
+// function
+func trimExtension(files ...string) []string {
+	out := make([]string, 0, len(files))
+	for _, f := range files {
+		out = append(out, strings.TrimSuffix(f, ".csv"))
+	}
+	return out
+}
+func fileChecker(name string) (string, error) {
+	f, err := os.Open(name)
+	if err != nil {
+		return "", errors.New("file not found")
+	}
+	defer f.Close()
+	return name, nil
+}
 func main() {
 	godotenv.Load()
 	fmt.Println(os.Getenv("GO_ENV"))
@@ -195,4 +213,23 @@ func main() {
 	// (&task1).extendEstimatePointer()
 	task1.extendEstimatePointer()
 	fmt.Printf("taks1 value receiver: %+v\n", task1.Estimate)
+
+	// function
+	files := []string{"file1.csv", "file2.csv", "file3.csv"}
+	fmt.Println(trimExtension(files...))
+	name, err := fileChecker("file.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(name)
+
+	i := 1
+	func(i int) {
+		fmt.Println(i)
+	}(i)
+	fn1 := func(i int) int {
+		return i + 1
+	}
+	fmt.Println(fn1(i))
 }
