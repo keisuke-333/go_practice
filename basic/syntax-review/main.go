@@ -46,6 +46,16 @@ func fileChecker(name string) (string, error) {
 	defer f.Close()
 	return name, nil
 }
+
+// closure
+func countUp() func(int) int {
+	count := 0
+	return func(n int) int {
+		count += n
+		return count
+	}
+}
+
 func main() {
 	godotenv.Load()
 	fmt.Println(os.Getenv("GO_ENV"))
@@ -232,4 +242,11 @@ func main() {
 		return i + 1
 	}
 	fmt.Println(fn1(i))
+
+	// closure
+	fn2 := countUp()
+	for i := 1; i <= 5; i++ {
+		v := fn2(2)
+		fmt.Println(v)
+	}
 }
