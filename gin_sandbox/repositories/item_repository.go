@@ -88,6 +88,16 @@ func (r *ItemRepository) FindAll() (*[]models.Item, error) {
 	return &items, nil
 }
 
+func (r *ItemRepository) FindById(itemId uint) (*models.Item, error) {
+	var item models.Item
+	result := r.db.First(&item, itemId)
+	if result.Error != nil {
+		if result.Error.Error() == "record not found" {
+			return nil, errors.New("item not found")
+		}
+		return nil, result.Error
+	}
+	return &item, nil
 }
 
 // Update implements IItemRepository.
