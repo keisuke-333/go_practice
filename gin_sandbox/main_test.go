@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
+	"net/http"
+	"net/http/httptest"
 	"os"
 	"sandbox/infra"
 	"sandbox/models"
@@ -9,6 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
 
@@ -50,4 +54,19 @@ func setup() *gin.Engine {
 	router := setupRouter(db)
 
 	return router
+}
+
+func TestFindAll(t *testing.T) {
+	router := setup()
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/items", nil)
+
+	router.ServeHTTP(w, req)
+
+	var res map[string][]models.Item
+	json.Unmarshal([]byte(w.Body.String()), &res)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, 3, len(res["data"]))
 }
